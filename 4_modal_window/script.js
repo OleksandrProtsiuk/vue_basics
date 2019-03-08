@@ -1,42 +1,39 @@
-// register modal component
-Vue.component('modal', {
-    template: '#modal-template'
-});
 
-// start app
 new Vue({
-    el: '#app',
-    data: {
-        showModal: false
-    }
-});
+    el: '#income-transaction',
+    data() {
+        return {
+            amount: null,
+            comment: null,
+            response: null,
+            errors: [],
+            notice: [],
+            activeClass: 'active'
+        }
+    },
+    methods: {
+        submitIncomeForm() {
+            let new_transaction_url = '//jsonplaceholder.typicode.com/posts';
 
-window.onload = function () {
-
-    new Vue({
-        el: '#test',
-        data() {
-            return {
-                name: '',
-                email: '',
-                caps: '',
-                response: '',
-                activeClass: 'active'
-            }
-        },
-        methods: {
-            submitForm() {
-                axios.post('//jsonplaceholder.typicode.com/posts', {
-                    name: this.name,
-                    email: this.email,
-                    caps: this.caps
+            if(this.amount && this.comment) {
+                axios.post( new_transaction_url, {
+                    amount: this.amount,
+                    comment: this.comment
                 }).then(response => {
                     this.response = JSON.stringify(response, null, 2)
-                })
+                });
+                this.amount = null;
+                this.comment = null;
+                this.errors = [];
+                this.notice.push('Data added');
             }
-        }
-    });
+            else {
+                this.errors = [];
+                if(!this.amount) this.errors.push('Amount required');
+                if(!this.comment) this.errors.push('Comment required');
+            }
 
-};
+        },
 
-
+    }
+});

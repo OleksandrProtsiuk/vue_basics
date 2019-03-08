@@ -5,86 +5,77 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     <title>Hello, world!</title>
 </head>
 <body>
+<br>
+<div class="container" id="income-transaction">
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Click me!</button>
 
 
-<!-- template for the modal component -->
-<script type="text/x-template" id="modal-template">
-    <transition name="modal">
-        <div class="modal-mask">
-            <div class="modal-wrapper">
-                <div class="modal-container">
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Form</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
 
-                    <div class="modal-header">
-                        <slot name="header">
-                            default header
-                        </slot>
-                    </div>
 
-                    <div class="modal-body">
-                        <slot name="body">
-                            default body
-                        </slot>
-                    </div>
+                <div>
 
-                    <div class="modal-footer">
-                        <slot name="footer">
-                            default footer
-                            <button class="modal-default-button" @click="$emit('close')">
-                                OK
-                            </button>
-                        </slot>
-                    </div>
+                    <form @submit.prevent="submitIncomeForm">
+                        <!-- errors here -->
+                        <div v-if="errors.length" class="alert alert-danger">
+                            <b>Please correct the following error(s):</b>
+                        <ul>
+                            <li v-for="error in errors">{{ error }}</li>
+                        </ul>
+                        </div>
+                        <!-- notices here -->
+                        <div v-if="notice.length">
+                            <pre v-for="notice in notice" class="alert alert-success"> {{ notice }} </pre>
+                        </div>
+                        <!-- fields go -->
+                        <div>
+                            <label for="amount">Input Amount</label><br>
+                            <input id="amount" type="text" v-model="amount" class="form-control"/>
+                        </div>
+                        <div>
+                            <label for="comment">comment</label><br>
+                            <input id="comment" type="text" v-model="comment" class="form-control"/>
+                        </div>
+                        <div class="modal-footer">
+                            <button :class="[amount ? activeClass : '']" type="submit" class="btn btn-warning">Add Transaction</button>
+                        </div>
+                    </form>
                 </div>
+
             </div>
         </div>
-    </transition>
-</script>
-
-<!-- app -->
-<div id="app" class="container">
-    <button id="show-modal" @click="showModal = true">Show Modal</button>
-    <!-- use the modal component, pass in the prop -->
-    <modal v-if="showModal" @close="showModal = false">
-        <!--
-          you can use custom content here to overwrite
-          default content
-        -->
-        <h3 slot="header">Form</h3>
-<div slot="body">
-    <div id="test">
-        <form @submit.prevent="submitForm">
-            <div>
-                <label for="name">Name:</label><br>
-                <input id="name" type="text" v-model="name" required class="form-control"/>
-            </div>
-            <div>
-                <label for="email">Email:</label><br>
-                <input id="email" type="email" v-model="email" required class="form-control"/>
-            </div>
-            <br>
-            <button :class="[name ? activeClass : '']" type="submit" class="btn btn-warning">Submit</button>
-        </form>
     </div>
 </div>
 
-    </modal>
-</div>
 
-<div>
-    <h3>Response from server:</h3>
-    <pre>{{ response }}</pre>
+    <div>
+        <hr>
+        <pre class="alert alert-success"> response from test-page: {{ response }} </pre>
+    </div>
+
 </div>
 
 
 <!-- Vue js -->
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.6/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="script.js"></script>
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
