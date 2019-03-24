@@ -10,3 +10,4 @@
 
 4. Simple Vue based form in Bootstrap modal window
 
+5. Currencies with PrivatBank public API
