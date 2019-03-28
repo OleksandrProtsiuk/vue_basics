@@ -1,5 +1,6 @@
 # Basics VueJs
 
+
 ####Contents:
 
 1. Hello World
@@ -11,3 +12,5 @@
 4. Simple Vue based form in Bootstrap modal window
 
 5. Currencies with PrivatBank public API
+
+6. Simple circle diagram 
